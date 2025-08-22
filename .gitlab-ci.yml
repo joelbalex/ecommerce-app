@@ -1,0 +1,25 @@
+stages: [lint, test, build]
+
+lint:
+  image: node:18-alpine
+  stage: lint
+  script:
+    - cd backend && npm ci && npm run lint
+    - cd ../frontend && npm ci && npm run lint
+
+test:
+  image: node:18-alpine
+  stage: test
+  script:
+    - cd backend && npm test
+    - cd ../frontend && npm test
+
+docker-build:
+  image: docker:24.0.5
+  stage: build
+  services: [docker:24.0.5-dind]
+  variables:
+    DOCKER_DRIVER: overlay2
+  script:
+    - docker build -t your-org/backend:$CI_PIPELINE_IID backend/
+    - docker build -t your-org/frontend:$CI_PIPELINE_IID frontend/
