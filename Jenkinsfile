@@ -13,11 +13,11 @@ pipeline {
     SONARQUBE_SERVER = "SonarQube"
   }
 
-  stages {
-    stage('Checkout') {
-      agent { label 'nodejs' }
-      steps { checkout scm }
-    }
+  // stages {
+  //   stage('Checkout') {
+  //     agent { label 'nodejs' }
+  //     steps { checkout scm }
+  //   }
 
     stage('Code Quality & Security') {
       agent { label 'nodejs' }
